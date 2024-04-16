@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
 
+	//"os"
+	//"github.com/gin-gonic/gin"
+
+	"fmt"
+)
 
 var myfunction = func(nums ...interface{}) {
 	fmt.Print(nums)
