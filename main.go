@@ -1,26 +1,27 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
+var wg sync.WaitGroup
 
-var myfunction = func(nums ...interface{}) {
-	fmt.Print(nums)
-	fmt.Printf("%T", nums)
+func hello(num int) {
+
+	fmt.Printf("hello %d\n", num)
+	wg.Done()
+
 }
 
-func main() {
-	// maps := make(map[string]interface{})
+func main() { // 开启一个主goroutine 执行main函数
+	wg.Add(10)
+	for i := 0; i < 10; i++ {
 
-	// maps["a"] = 1
-	// maps["b"] = "b"
-	// maps["c"] = false
-
-	maps := map[string]interface{}{
-		"number": 1,
-		"string": "c",
-		"bool":   false,
+		go hello(i) // 开启另一个goroutine 执行hello()
 	}
+	fmt.Println("hello 执行完了")
+	// time.Sleep(2 * time.Second)
 
-	myfunction(1, "Mystring", []string{"1", "2"}, maps)
-
+	wg.Wait()
 }
